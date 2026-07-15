@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Semakan ID DELIMa Murid</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-tr from-blue-900 via-indigo-950 to-slate-900 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Card Utama -->
+  <div class="glass-effect w-full max-w-md rounded-2xl shadow-2xl border border-white/20 p-8 transition-all duration-300">
+    <!-- Header Web -->
+    <div class="text-center mb-8">
+      <div class="inline-flex p-3 bg-blue-600/10 rounded-full text-blue-400 mb-3 text-3xl">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <h1 class="text-2xl font-extrabold text-slate-800 tracking-tight">Semak ID DELIMa</h1>
+      <p class="text-slate-500 text-sm mt-1">Masukkan butiran di bawah untuk carian pantas</p>
+    </div>
+
+    <!-- Form Carian -->
+    <form id="searchForm" class="space-y-5">
+      <!-- Input Category (Kelas) -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">Kelas / Kategori</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            <i class="fa-solid fa-school"></i>
+          </span>
+          <select id="category" required class="w-full pl-10 pr-4 py-3 bg-white/70 border border-slate-200 rounded-xl text-slate-800 font-medium focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition appearance-none">
+            <option value="" disabled selected>Pilih Kelas Anda</option>
+            <!-- Anda boleh tukar/tambah senarai kelas di bawah ikut data Sheet anda -->
+            <option value="1 Cemerlang">1 Cemerlang</option>
+            <option value="1 Pintar">1 Pintar</option>
+            <option value="2 Cemerlang">2 Cemerlang</option>
+            <option value="2 Pintar">2 Pintar</option>
+          </select>
+          <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+            <i class="fa-solid fa-chevron-down text-xs"></i>
+          </span>
+        </div>
+      </div>
+
+      <!-- Input 6 Digit No IC -->
+      <div>
+        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-2">6 Digit Terakhir No. IC</label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            <i class="fa-solid fa-key"></i>
+          </span>
+          <input type="text" id="lastsixdigit" pattern="[0-9]{6}" maxlength="6" inputmode="numeric" placeholder="Contoh: 123456" required 
+            class="w-full pl-10 pr-4 py-3 bg-white/70 border border-slate-200 rounded-xl text-slate-800 font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none transition">
+        </div>
+      </div>
+
+      <!-- Butang Hantar -->
+      <button type="submit" id="btnSubmit" class="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 active:scale-95 transition transform duration-150">
+        <span id="btnText"><i class="fa-solid fa-magnifying-glass mr-2"></i> Cari Maklumat</span>
+        <span id="btnLoading" class="hidden"><i class="fa-solid fa-circle-notch animate-spin mr-2"></i> Mencari...</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Modal Keputusan -->
+  <div id="resultModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-100 transform transition-all scale-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center border-b pb-4 mb-5">
+        <h3 class="text-lg font-bold text-slate-800"><i class="fa-solid fa-circle-check text-green-500 mr-2"></i>Maklumat Dijumpai!</h3>
+        <button onclick="closeModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark text-xl"></i></button>
+      </div>
+
+      <!-- Detail Pelajar -->
+      <div class="space-y-4">
+        <div>
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block">Nama Penuh</span>
+          <p id="resName" class="text-base font-bold text-slate-800">-</p>
+        </div>
+
+        <!-- Box ID MOE -->
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">ID MOE (Google)</span>
+          <div class="flex justify-between items-center">
+            <span id="resEmail" class="font-mono text-slate-700 font-bold select-all break-all">-</span>
+            <button onclick="copyText('resEmail', 'copyBtnEmail')" id="copyBtnEmail" class="ml-2 text-blue-600 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition" title="Salin ID">
+              <i class="fa-regular fa-copy text-lg"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Box Kata Laluan -->
+        <div class="bg-slate-50 p-3 rounded-xl border border-slate-100">
+          <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">Kata Laluan</span>
+          <div class="flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+              <span id="resPassword" class="font-mono text-slate-700 font-bold tracking-widest">-</span>
+            </div>
+            <div class="flex items-center space-x-1">
+              <button onclick="togglePasswordVisibility()" class="text-slate-500 hover:text-slate-700 p-2" title="Tunjuk/Sembunyi">
+                <i id="eyeIcon" class="fa-regular fa-eye"></i>
+              </button>
+              <button onclick="copyText('resPassword', 'copyBtnPass')" id="copyBtnPass" class="text-blue-600 hover:text-blue-800 p-2 rounded-lg hover:bg-blue-50 transition" title="Salin Kata Laluan">
+                <i class="fa-regular fa-copy text-lg"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Taktik Aliran Kerja Dua Langkah (Canggih) -->
+      <div class="mt-6 border-t pt-4 space-y-3">
+        <div class="text-xs text-slate-500 bg-amber-50 border border-amber-100 p-3 rounded-lg flex items-start">
+          <i class="fa-solid fa-circle-info text-amber-500 mt-0.5 mr-2"></i>
+          <span>Sila <strong>Salin ID MOE</strong> dahulu sebelum klik butang log masuk di bawah.</span>
+        </div>
+        <a href="https://delima.moe-dl.edu.my" target="_blank" class="w-full block text-center py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition transform duration-150">
+          Log Masuk DELIMa <i class="fa-solid fa-arrow-right-to-bracket ml-1.5"></i>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Fail JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
