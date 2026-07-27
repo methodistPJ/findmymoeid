@@ -228,7 +228,7 @@
       } catch (error) {
         console.error("Ralat:", error);
         alert("Maaf, ralat sistem berlaku. Sila cuba sebentar lagi.");
-      } finally {
+      } fontly {
         setLoadingState(false);
       }
     });
@@ -302,14 +302,15 @@
         console.error("Gagal menyalin teks: ", err);
       }
     }
+
+    // Pendaftaran PWA Service Worker (DITAMBAH DI SINI)
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(reg => console.log('PWA Service Worker Berjaya Didaftarkan!'))
+          .catch(err => console.log('PWA Service Worker Ralat:', err));
+      });
+    }
   </script>
-// Pendaftaran PWA Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('PWA Service Worker Berjaya Didaftarkan!'))
-      .catch(err => console.log('PWA Service Worker Ralat:', err));
-  });
-}
 </body>
 </html>
