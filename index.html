@@ -4,9 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Semakan ID DELIMa Murid & Guru</title>
+  
   <!-- Manifest PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0f172a">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f172a">
+  
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- FontAwesome Icons -->
@@ -228,7 +230,7 @@
       } catch (error) {
         console.error("Ralat:", error);
         alert("Maaf, ralat sistem berlaku. Sila cuba sebentar lagi.");
-      } fontly {
+      } finally {
         setLoadingState(false);
       }
     });
@@ -303,7 +305,7 @@
       }
     }
 
-    // Pendaftaran PWA Service Worker (DITAMBAH DI SINI)
+    // Pendaftaran PWA Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
