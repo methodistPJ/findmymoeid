@@ -3,12 +3,17 @@
   "name": "Semakan ID DELIMa SK Methodist PJ",
   "icons": [
     {
-      "src": "logo.png",
+      "src": "https://cdn.phototourl.com/free/2026-07-17-b174f0c0-38fa-45c3-ad01-aea44ba03c7f.png",
       "type": "image/png",
-      "sizes": "192x192 512x512"
+      "sizes": "192x192"
+    },
+    {
+      "src": "https://cdn.phototourl.com/free/2026-07-17-b174f0c0-38fa-45c3-ad01-aea44ba03c7f.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "./",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "display": "standalone",
