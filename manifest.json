@@ -1,0 +1,16 @@
+{
+  "short_name": "DELIMa Hub",
+  "name": "Semakan ID DELIMa SK Methodist PJ",
+  "icons": [
+    {
+      "src": "logo.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "display": "standalone",
+  "orientation": "portrait"
+}
