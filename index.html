@@ -308,12 +308,26 @@
       }
     }
 
-    // Pendaftaran PWA Service Worker
+    // Pendaftaran PWA Service Worker dengan Auto-Reload Pintar
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-          .then(reg => console.log('PWA Service Worker Berjaya Didaftarkan!'))
-          .catch(err => console.log('PWA Service Worker Ralat:', err));
+        navigator.serviceWorker.register('sw.js').then(reg => {
+          console.log('PWA Service Worker Berjaya Didaftarkan!');
+          
+          // Kesan jika ada kemas kini kod baharu di GitHub
+          reg.onupdatefound = () => {
+            const installingWorker = reg.installing;
+            installingWorker.onstatechange = () => {
+              if (installingWorker.state === 'installed') {
+                if (navigator.serviceWorker.controller) {
+                  // Kod baharu dikesan, muat semula aplikasi automatik
+                  console.log('Versi baharu dikesan, memuat semula aplikasi...');
+                  window.location.reload();
+                }
+              }
+            };
+          };
+        }).catch(err => console.log('PWA Service Worker Ralat:', err));
       });
     }
   </script>
