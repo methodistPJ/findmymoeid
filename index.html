@@ -216,10 +216,10 @@
           
           if (categoryCleaned === 'guru') {
             labelElement.innerText = "Kategori";
-            valueElement.innerText = "guru";
+            valueElement.innerText = "GURU";
           } else {
             labelElement.innerText = "Kelas";
-            valueElement.innerText = category;
+            valueElement.innerText = category.toUpperCase();
           }
 
           document.getElementById('resEmail').innerText = result.data.moeid;
